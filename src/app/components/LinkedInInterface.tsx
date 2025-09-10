@@ -86,7 +86,7 @@ export default function LinkedInInterface() {
                 onChange={(e) => setPost(e.target.value)}
                 placeholder="What do you want to share? (Write that passive-aggressive post you've been holding back...)"
                 className="w-full p-3 text-gray-900 placeholder-gray-500 resize-none border-none focus:outline-none focus:ring-0 text-base"
-                rows={4}
+                rows={8}
               />
             </div>
           </div>
