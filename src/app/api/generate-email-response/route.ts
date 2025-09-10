@@ -78,7 +78,12 @@ Body: ${email.body}`
   }
 
   const data = await response.json();
-  return JSON.parse(data.choices[0].message.content);
+  let content = data.choices[0].message.content;
+  
+  // Remove markdown code block formatting if present
+  content = content.replace(/```json\s*/, '').replace(/```\s*$/, '').trim();
+  
+  return JSON.parse(content);
 }
 
 function generateFallbackResponse(email: { to: string; subject: string; body: string }) {

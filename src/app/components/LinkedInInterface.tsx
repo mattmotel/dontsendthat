@@ -209,6 +209,17 @@ export default function LinkedInInterface() {
         </div>
       )}
 
+      {/* Comment Generation Loading State */}
+      {isGenerating && comments.length === 0 && (
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+          <div className="flex items-center space-x-3">
+            <div className="animate-spin w-5 h-5 border-2 border-blue-600 border-t-transparent rounded-full"></div>
+            <span className="text-blue-800 font-medium">Generating cathartic responses from your LinkedIn network...</span>
+          </div>
+          <p className="text-blue-600 text-sm mt-2">Hang tight, your validation is coming! 🎯</p>
+        </div>
+      )}
+
       {/* Comments */}
       {comments.length > 0 && (
         <div className="bg-white rounded-lg shadow-sm border border-gray-200">
