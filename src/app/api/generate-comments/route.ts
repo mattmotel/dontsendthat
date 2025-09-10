@@ -3,7 +3,35 @@ import { NextRequest, NextResponse } from 'next/server';
 const FAKE_NAMES = [
   'Brad Thompson', 'Sarah Mitchell', 'Mike Rodriguez', 'Jessica Chen', 
   'David Park', 'Amanda Wilson', 'Chris Johnson', 'Lisa Garcia',
-  'Ryan O\'Connor', 'Michelle Davis', 'Kevin Lee', 'Rachel Brown'
+  'Ryan O\'Connor', 'Michelle Davis', 'Kevin Lee', 'Rachel Brown',
+  'Marcus Williams', 'Emma Thompson', 'Tyler Anderson', 'Sophia Martinez',
+  'Jake Miller', 'Olivia Taylor', 'Noah Jackson', 'Isabella White',
+  'Ethan Harris', 'Ava Clark', 'Mason Lewis', 'Mia Walker',
+  'Logan Hall', 'Charlotte Allen', 'Lucas Young', 'Amelia King',
+  'Alexander Wright', 'Harper Lopez', 'Benjamin Hill', 'Evelyn Scott',
+  'Sebastian Green', 'Abigail Adams', 'Henry Baker', 'Emily Nelson',
+  'Jackson Carter', 'Elizabeth Mitchell', 'Aiden Roberts', 'Sofia Turner',
+  'Owen Phillips', 'Avery Campbell', 'Luke Parker', 'Ella Evans',
+  'Gabriel Edwards', 'Scarlett Collins', 'Carter Stewart', 'Grace Morris',
+  'Julian Sanchez', 'Chloe Reed', 'Grayson Cook', 'Zoey Bell',
+  'Connor Murphy', 'Victoria Hughes', 'Caleb Foster', 'Lily Peterson',
+  'Isaac Rivera', 'Natalie Cooper', 'Wyatt Bailey', 'Hazel Reed',
+  'Nathan Brooks', 'Leah Kelly', 'Eli Howard', 'Nora Ward',
+  'Christian Torres', 'Stella Cox', 'Hunter Richardson', 'Aurora Watson',
+  'Colton Gray', 'Savannah James', 'Landon Flores', 'Brooklyn Sanders',
+  'Adrian Price', 'Layla Bennett', 'Jonathan Wood', 'Ellie Barnes',
+  'Jeremiah Ross', 'Maya Henderson', 'Cameron Coleman', 'Naomi Jenkins',
+  'Brayden Powell', 'Elena Perry', 'Xavier Long', 'Claire Patterson',
+  'Dominic Hughes', 'Aubrey Simmons', 'Jaxon Foster', 'Anna Bryant',
+  'Ian Alexander', 'Samantha Washington', 'Bryce Griffin', 'Addison Butler',
+  'Tristan Russell', 'Audrey Diaz', 'Blake Hayes', 'Bella Myers',
+  'Cole Ford', 'Ariana Hamilton', 'Ashton Graham', 'Gabriella Sullivan',
+  'Miles Wallace', 'Serenity Woods', 'Diego Russell', 'Genesis Knight',
+  'Micah Burns', 'Skylar Stone', 'Easton Palmer', 'Faith Robertson',
+  'Levi Crawford', 'Mackenzie Ellis', 'Jace Simpson', 'Paige Marshall',
+  'Antonio Reid', 'Kinsley Webb', 'Kaden Tucker', 'Jasmine Casey',
+  'Bryson Lawson', 'Piper Duncan', 'Declan Fuller', 'Ruby Lynch',
+  'Lincoln Freeman', 'Alexa Boyd', 'Ayden Spencer', 'Everly Fletcher'
 ];
 
 const PROFILE_PICS = [
@@ -108,9 +136,12 @@ export async function POST(request: NextRequest) {
       commentTexts = await generateFallbackComments();
     }
 
+    // Shuffle the names array and take the first 10 to ensure no duplicates
+    const shuffledNames = [...FAKE_NAMES].sort(() => Math.random() - 0.5);
+    
     const comments = commentTexts.map((content, index) => ({
       id: `comment-${Date.now()}-${index}`,
-      author: getRandomElement(FAKE_NAMES),
+      author: shuffledNames[index % shuffledNames.length],
       content,
       timestamp: generateTimestamp(),
       profilePic: getRandomElement(PROFILE_PICS),
