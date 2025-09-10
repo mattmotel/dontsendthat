@@ -1,28 +1,25 @@
-import { createAvatar } from '@dicebear/core';
-import { personas } from '@dicebear/collection';
-
-export function generateAvatarUrl(seed: string): string {
-  const avatar = createAvatar(personas, {
-    seed,
-    size: 128,
-    backgroundColor: ['b6e3f4', 'c0aede', 'd1d4f9', 'ffd5dc', 'ffdfbf'],
-  });
-  
-  return avatar.toDataUri();
-}
-
+// Generate consistent real photo URLs based on name using RandomUser.me
 export function generateProfileAvatar(name: string, size: number = 40): string {
-  // Use the person's name as seed for consistent avatars
+  // Use the person's name as seed for consistent photos
   const seed = name.toLowerCase().replace(/\s+/g, '');
   
-  const avatar = createAvatar(personas, {
-    seed,
-    size,
-    backgroundColor: ['b6e3f4', 'c0aede', 'd1d4f9', 'ffd5dc', 'ffdfbf'],
-    // Make avatars look more professional
-    eyes: ['open', 'happy', 'wink', 'glasses'],
-    mouth: ['smile', 'frown', 'surprise', 'bigSmile'],
-  });
+  // Create a simple hash from the name to get a consistent number
+  let hash = 0;
+  for (let i = 0; i < seed.length; i++) {
+    const char = seed.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash; // Convert to 32-bit integer
+  }
   
-  return avatar.toDataUri();
+  // Use absolute value to ensure positive number  
+  const photoId = Math.abs(hash) % 1000;
+  
+  // Use RandomUser.me API which provides real photos of people
+  // Mix of men and women photos for variety
+  const genders = ['men', 'women'];
+  const gender = genders[photoId % 2];
+  const id = (photoId % 99) + 1; // RandomUser has portraits 1-99
+  
+  return `https://randomuser.me/api/portraits/${gender}/${id}.jpg`;
 }
+

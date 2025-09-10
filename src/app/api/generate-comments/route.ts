@@ -36,9 +36,24 @@ async function generateWithOpenAI(post: string) {
       messages: [
         {
           role: 'system',
-          content: `You are generating 10 LinkedIn-style comments in response to a post. The comments should be cathartic and satisfying responses that validate the user's frustration or call out problematic behavior. Mix supportive comments with ones that cleverly roast or critique the original post's subject. Make them feel realistic but satisfying.
+          content: `You are generating 10 LinkedIn-style comments that are CATHARTIC and SATISFYING responses to a post. The user wrote this post to vent frustration, so give them the validation and support they deserve.
 
-Return ONLY a JSON array of exactly 10 comment strings. No other text. Each comment should be 1-3 sentences max and sound like different LinkedIn users responding.`
+IMPORTANT: Analyze the post content and respond specifically to what they're complaining about. If they're frustrated with:
+- Bad managers: Comments should validate how terrible that manager sounds
+- Toxic coworkers: Agree they're awful and unprofessional  
+- Unreasonable clients: Sympathize and share similar horror stories
+- Corporate BS: Call out the hypocrisy and fake culture
+- Thought leaders: Mock their empty platitudes and buzzwords
+- Hustle culture: Point out how toxic and unsustainable it is
+
+Make the comments feel like a supportive community that "gets it" and is on their side. Include:
+- 3-4 very supportive "you're absolutely right" comments
+- 3-4 comments that add similar experiences or stories
+- 2-3 comments that cleverly roast/critique the subject of their frustration
+
+Each comment should be 1-2 sentences, sound like real LinkedIn professionals, and be SPECIFICALLY relevant to their post content.
+
+Return ONLY a JSON array of exactly 10 comment strings. No other text.`
         },
         {
           role: 'user',
@@ -59,18 +74,18 @@ Return ONLY a JSON array of exactly 10 comment strings. No other text. Each comm
 }
 
 async function generateFallbackComments(): Promise<string[]> {
-  // Fallback comments when OpenAI is not available
+  // Cathartic fallback comments when OpenAI is not available
   const templates = [
-    "Finally someone said it! 🙌",
-    "This is exactly why I love LinkedIn - real talk like this.",
-    "Preach! More people need to hear this.",
-    "You're absolutely right. I've seen this so many times.",
-    "This deserves way more visibility. Sharing!",
-    "Thank you for calling this out. It needed to be said.",
-    "100% agree. The hypocrisy is real.",
-    "This is the kind of honest content we need more of.",
-    "Facts! I'm tired of people pretending this isn't an issue.",
-    "You just articulated what so many of us were thinking."
+    "FINALLY someone with the courage to say what we're all thinking!",
+    "This is exactly the kind of toxic behavior that needs to be called out.",
+    "You handled this with way more professionalism than they deserved.",
+    "I've dealt with the exact same BS. You're absolutely in the right here.",
+    "The audacity of some people never ceases to amaze me. You're spot on.",
+    "This perfectly captures everything wrong with corporate culture today.",
+    "Thank you for not sugar-coating this. Someone needed to say it.",
+    "I'm so tired of people like this getting away with this behavior.",
+    "You showed incredible restraint. I would have lost it completely.",
+    "This is why I have trust issues with management. Solidarity! 🤝"
   ];
   
   return templates.slice(0, 10);
