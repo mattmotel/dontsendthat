@@ -15,7 +15,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center space-x-4">
-              <h1 className="text-xl font-bold text-gray-900">Don't Send That</h1>
+              <h1 className="text-xl font-bold text-gray-900">Don&apos;t Send That</h1>
               <span className="text-sm text-gray-500">Cathartic fake responses</span>
             </div>
             

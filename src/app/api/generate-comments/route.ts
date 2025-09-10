@@ -58,7 +58,7 @@ Return ONLY a JSON array of exactly 10 comment strings. No other text. Each comm
   return JSON.parse(data.choices[0].message.content);
 }
 
-async function generateFallbackComments(post: string): Promise<string[]> {
+async function generateFallbackComments(): Promise<string[]> {
   // Fallback comments when OpenAI is not available
   const templates = [
     "Finally someone said it! 🙌",
@@ -90,7 +90,7 @@ export async function POST(request: NextRequest) {
       commentTexts = await generateWithOpenAI(post);
     } catch (error) {
       console.log('OpenAI generation failed, using fallbacks:', error);
-      commentTexts = await generateFallbackComments(post);
+      commentTexts = await generateFallbackComments();
     }
 
     const comments = commentTexts.map((content, index) => ({

@@ -11,6 +11,7 @@ import {
   X,
   Mail
 } from 'lucide-react';
+import { generateProfileAvatar } from '../utils/avatars';
 
 interface EmailResponse {
   id: string;
@@ -213,11 +214,11 @@ Write that passive-aggressive email you've been drafting in your head for weeks.
               <div className="bg-gray-50 rounded-lg p-4">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-gradient-to-r from-green-400 to-blue-500 rounded-full flex items-center justify-center shadow-sm">
-                      <span className="text-white font-semibold text-sm">
-                        {response.from.charAt(0)}
-                      </span>
-                    </div>
+                    <img 
+                      src={generateProfileAvatar(response.from, 40)} 
+                      alt={response.from}
+                      className="w-10 h-10 rounded-full shadow-sm"
+                    />
                     <div>
                       <div className="font-semibold text-gray-900">{response.from}</div>
                       <div className="text-sm text-gray-500 flex items-center space-x-2">

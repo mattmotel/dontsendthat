@@ -12,6 +12,7 @@ import {
   MoreHorizontal,
   Globe
 } from 'lucide-react';
+import { generateProfileAvatar } from '../utils/avatars';
 
 interface Comment {
   id: string;
@@ -77,9 +78,11 @@ export default function LinkedInInterface() {
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
         <div className="p-4">
           <div className="flex items-start space-x-3">
-            <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full flex items-center justify-center shadow-sm">
-              <span className="text-white font-semibold text-sm">YU</span>
-            </div>
+            <img 
+              src={generateProfileAvatar('You', 48)} 
+              alt="Your profile"
+              className="w-12 h-12 rounded-full shadow-sm"
+            />
             <div className="flex-1">
               <textarea
                 value={post}
@@ -141,9 +144,11 @@ export default function LinkedInInterface() {
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
           <div className="p-4">
             <div className="flex items-start space-x-3">
-              <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full flex items-center justify-center shadow-sm">
-                <span className="text-white font-semibold text-sm">YU</span>
-              </div>
+              <img 
+                src={generateProfileAvatar('You', 48)} 
+                alt="Your profile"
+                className="w-12 h-12 rounded-full shadow-sm"
+              />
               <div className="flex-1">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
@@ -221,11 +226,11 @@ export default function LinkedInInterface() {
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
                   <div className="flex items-start space-x-3">
-                    <div className="w-8 h-8 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center flex-shrink-0">
-                      <span className="text-white font-semibold text-xs">
-                        {comment.author.charAt(0)}
-                      </span>
-                    </div>
+                    <img 
+                      src={generateProfileAvatar(comment.author, 32)} 
+                      alt={comment.author}
+                      className="w-8 h-8 rounded-full flex-shrink-0"
+                    />
                     <div className="flex-1 min-w-0">
                       <div className="bg-gray-50 rounded-lg px-3 py-2">
                         <div className="flex items-center space-x-2 mb-1">
