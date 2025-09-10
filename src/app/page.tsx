@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { Linkedin, Mail } from 'lucide-react';
 import LinkedInInterface from './components/LinkedInInterface';
 import GmailInterface from './components/GmailInterface';
 
@@ -22,23 +23,25 @@ export default function Home() {
             <div className="flex bg-gray-100 rounded-lg p-1">
               <button
                 onClick={() => setActiveTab('linkedin')}
-                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors flex items-center space-x-2 ${
                   activeTab === 'linkedin'
                     ? 'bg-white text-blue-600 shadow-sm'
                     : 'text-gray-600 hover:text-gray-900'
                 }`}
               >
-                LinkedIn
+                <Linkedin size={16} />
+                <span>LinkedIn</span>
               </button>
               <button
                 onClick={() => setActiveTab('gmail')}
-                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors flex items-center space-x-2 ${
                   activeTab === 'gmail'
                     ? 'bg-white text-red-600 shadow-sm'
                     : 'text-gray-600 hover:text-gray-900'
                 }`}
               >
-                Gmail
+                <Mail size={16} />
+                <span>Gmail</span>
               </button>
             </div>
           </div>

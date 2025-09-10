@@ -1,6 +1,16 @@
 'use client';
 
 import { useState } from 'react';
+import { 
+  Send, 
+  Paperclip, 
+  Link, 
+  Smile, 
+  Minimize2, 
+  Maximize2, 
+  X,
+  Mail
+} from 'lucide-react';
 
 interface EmailResponse {
   id: string;
@@ -67,15 +77,15 @@ export default function GmailInterface() {
       <div className="bg-white rounded-t-lg border border-gray-200 border-b-0">
         <div className="flex items-center justify-between p-4 border-b border-gray-200">
           <h2 className="text-lg font-semibold text-gray-900">Compose</h2>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-1">
             <button className="p-2 hover:bg-gray-100 rounded">
-              <span className="text-gray-500">−</span>
+              <Minimize2 size={16} className="text-gray-500" />
             </button>
             <button className="p-2 hover:bg-gray-100 rounded">
-              <span className="text-gray-500">□</span>
+              <Maximize2 size={16} className="text-gray-500" />
             </button>
             <button onClick={clearEmail} className="p-2 hover:bg-gray-100 rounded">
-              <span className="text-gray-500">×</span>
+              <X size={16} className="text-gray-500" />
             </button>
           </div>
         </div>
@@ -125,30 +135,33 @@ Write that passive-aggressive email you've been drafting in your head for weeks.
           {/* Send Button */}
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <button
-                onClick={handleSend}
-                disabled={!to.trim() || !subject.trim() || !body.trim() || isSending || isGenerating}
-                className="px-6 py-2 bg-blue-600 text-white rounded font-medium text-sm hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
-              >
-                {isSending ? (
-                  <>
-                    <div className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full"></div>
-                    <span>Sending...</span>
-                  </>
-                ) : (
-                  <span>Send</span>
-                )}
-              </button>
+                <button
+                  onClick={handleSend}
+                  disabled={!to.trim() || !subject.trim() || !body.trim() || isSending || isGenerating}
+                  className="px-6 py-2 bg-blue-600 text-white rounded font-medium text-sm hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+                >
+                  {isSending ? (
+                    <>
+                      <div className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full"></div>
+                      <span>Sending...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send size={16} />
+                      <span>Send</span>
+                    </>
+                  )}
+                </button>
               
-              <div className="flex items-center space-x-2 text-gray-500">
+              <div className="flex items-center space-x-1 text-gray-500">
                 <button className="p-2 hover:bg-gray-100 rounded" title="Attach file">
-                  📎
+                  <Paperclip size={18} />
                 </button>
                 <button className="p-2 hover:bg-gray-100 rounded" title="Insert link">
-                  🔗
+                  <Link size={18} />
                 </button>
                 <button className="p-2 hover:bg-gray-100 rounded" title="Insert emoji">
-                  😊
+                  <Smile size={18} />
                 </button>
               </div>
             </div>
@@ -200,14 +213,17 @@ Write that passive-aggressive email you've been drafting in your head for weeks.
               <div className="bg-gray-50 rounded-lg p-4">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-gradient-to-r from-green-400 to-blue-500 rounded-full flex items-center justify-center">
+                    <div className="w-10 h-10 bg-gradient-to-r from-green-400 to-blue-500 rounded-full flex items-center justify-center shadow-sm">
                       <span className="text-white font-semibold text-sm">
                         {response.from.charAt(0)}
                       </span>
                     </div>
                     <div>
-                      <div className="font-medium text-gray-900">{response.from}</div>
-                      <div className="text-sm text-gray-500">{response.timestamp}</div>
+                      <div className="font-semibold text-gray-900">{response.from}</div>
+                      <div className="text-sm text-gray-500 flex items-center space-x-2">
+                        <Mail size={14} />
+                        <span>{response.timestamp}</span>
+                      </div>
                     </div>
                   </div>
                 </div>

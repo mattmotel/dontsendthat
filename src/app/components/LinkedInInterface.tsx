@@ -167,53 +167,90 @@ export default function LinkedInInterface() {
             )}
             
             {!isPosting && (
-              <div className="mt-4 pt-4 border-t border-gray-100">
-                <div className="flex items-center justify-between text-sm text-gray-500 mb-3">
-                  <span>{comments.length} comments</span>
-                  {isGenerating && (
-                    <div className="flex items-center space-x-2">
-                      <div className="animate-spin w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full"></div>
-                      <span>Generating responses...</span>
+              <>
+                {/* Engagement Stats */}
+                <div className="mt-4 pt-3 border-t border-gray-100">
+                  <div className="flex items-center justify-between text-sm text-gray-500 mb-3">
+                    <div className="flex items-center space-x-4">
+                      <span className="flex items-center space-x-1">
+                        <ThumbsUp size={14} className="text-blue-600" />
+                        <span>{Math.floor(Math.random() * 50) + 10} likes</span>
+                      </span>
+                      <span>{comments.length} comments</span>
                     </div>
-                  )}
+                    {isGenerating && (
+                      <div className="flex items-center space-x-2">
+                        <div className="animate-spin w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full"></div>
+                        <span>Generating responses...</span>
+                      </div>
+                    )}
+                  </div>
+                  
+                  {/* Engagement Buttons */}
+                  <div className="flex items-center justify-between pt-2 border-t border-gray-100">
+                    <button className="flex items-center space-x-2 px-4 py-2 hover:bg-gray-50 rounded-lg transition-colors flex-1 justify-center">
+                      <ThumbsUp size={18} className="text-gray-600" />
+                      <span className="text-sm font-medium text-gray-700">Like</span>
+                    </button>
+                    <button className="flex items-center space-x-2 px-4 py-2 hover:bg-gray-50 rounded-lg transition-colors flex-1 justify-center">
+                      <MessageCircle size={18} className="text-gray-600" />
+                      <span className="text-sm font-medium text-gray-700">Comment</span>
+                    </button>
+                    <button className="flex items-center space-x-2 px-4 py-2 hover:bg-gray-50 rounded-lg transition-colors flex-1 justify-center">
+                      <Share2 size={18} className="text-gray-600" />
+                      <span className="text-sm font-medium text-gray-700">Share</span>
+                    </button>
+                  </div>
                 </div>
-              </div>
+              </>
             )}
           </div>
         </div>
       )}
 
       {/* Comments */}
-      <div className="space-y-4">
-        {comments.map((comment, index) => (
-          <div
-            key={comment.id}
-            className="bg-white rounded-lg shadow-sm border border-gray-200 animate-fade-in"
-            style={{ animationDelay: `${index * 100}ms` }}
-          >
-            <div className="p-4">
-              <div className="flex items-start space-x-3">
-                <div className="w-10 h-10 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center">
-                  <span className="text-white font-semibold text-sm">
-                    {comment.author.charAt(0)}
-                  </span>
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center space-x-2">
-                    <span className="font-semibold text-gray-900">{comment.author}</span>
-                    <span className="text-gray-500 text-sm">• {comment.timestamp}</span>
+      {comments.length > 0 && (
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+          <div className="p-4">
+            <h3 className="text-sm font-medium text-gray-900 mb-4">Comments</h3>
+            <div className="space-y-4">
+              {comments.map((comment, index) => (
+                <div
+                  key={comment.id}
+                  className="animate-fade-in"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  <div className="flex items-start space-x-3">
+                    <div className="w-8 h-8 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center flex-shrink-0">
+                      <span className="text-white font-semibold text-xs">
+                        {comment.author.charAt(0)}
+                      </span>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="bg-gray-50 rounded-lg px-3 py-2">
+                        <div className="flex items-center space-x-2 mb-1">
+                          <span className="font-semibold text-gray-900 text-sm">{comment.author}</span>
+                          <span className="text-gray-500 text-xs">• {comment.timestamp}</span>
+                        </div>
+                        <p className="text-sm text-gray-900">{comment.content}</p>
+                      </div>
+                      <div className="mt-2 flex items-center space-x-4 text-xs text-gray-500">
+                        <button className="flex items-center space-x-1 hover:text-blue-600 transition-colors">
+                          <ThumbsUp size={12} />
+                          <span>Like</span>
+                        </button>
+                        <button className="hover:text-blue-600 transition-colors">Reply</button>
+                        <span className="text-gray-400">•</span>
+                        <span>{Math.floor(Math.random() * 20) + 1} likes</span>
+                      </div>
+                    </div>
                   </div>
-                  <p className="mt-1 text-gray-900">{comment.content}</p>
-                  <div className="mt-2 flex items-center space-x-4 text-sm text-gray-500">
-                    <button className="hover:text-blue-600">👍 Like</button>
-                    <button className="hover:text-blue-600">Reply</button>
-                  </div>
                 </div>
-              </div>
+              ))}
             </div>
           </div>
-        ))}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
