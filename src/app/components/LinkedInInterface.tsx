@@ -78,11 +78,9 @@ export default function LinkedInInterface() {
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
         <div className="p-4">
           <div className="flex items-start space-x-3">
-            <img 
-              src={generateProfileAvatar('You', 48)} 
-              alt="Your profile"
-              className="w-12 h-12 rounded-full shadow-sm"
-            />
+            <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full flex items-center justify-center shadow-sm">
+              <span className="text-white font-semibold text-sm">YU</span>
+            </div>
             <div className="flex-1">
               <textarea
                 value={post}
@@ -144,11 +142,9 @@ export default function LinkedInInterface() {
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
           <div className="p-4">
             <div className="flex items-start space-x-3">
-              <img 
-                src={generateProfileAvatar('You', 48)} 
-                alt="Your profile"
-                className="w-12 h-12 rounded-full shadow-sm"
-              />
+              <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full flex items-center justify-center shadow-sm">
+                <span className="text-white font-semibold text-sm">YU</span>
+              </div>
               <div className="flex-1">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
