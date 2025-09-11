@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { 
   Send, 
   Paperclip, 
@@ -192,7 +193,7 @@ Write that passive-aggressive email you've been drafting in your head for weeks.
         <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
           <div className="flex items-center space-x-3">
             <div className="animate-spin w-5 h-5 border-2 border-blue-600 border-t-transparent rounded-full"></div>
-            <span className="text-blue-800">Generating a satisfying response...</span>
+            <span className="text-blue-800">Waiting for a satisfying response...</span>
           </div>
         </div>
       )}
@@ -214,9 +215,11 @@ Write that passive-aggressive email you've been drafting in your head for weeks.
               <div className="bg-gray-50 rounded-lg p-4">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center space-x-3">
-                    <img 
+                    <Image 
                       src={generateProfileAvatar(response.from, 40)} 
                       alt={response.from}
+                      width={40}
+                      height={40}
                       className="w-10 h-10 rounded-full shadow-sm"
                     />
                     <div>

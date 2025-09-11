@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { 
   ThumbsUp, 
   MessageCircle, 
@@ -288,9 +289,11 @@ export default function LinkedInInterface() {
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
                   <div className="flex items-start space-x-3">
-                    <img 
+                    <Image 
                       src={generateProfileAvatar(comment.author, 32)} 
                       alt={comment.author}
+                      width={32}
+                      height={32}
                       className="w-8 h-8 rounded-full flex-shrink-0"
                     />
                     <div className="flex-1 min-w-0">
@@ -343,14 +346,14 @@ export default function LinkedInInterface() {
             <div className="flex items-start space-x-2">
               <div className="w-2 h-2 bg-gray-400 rounded-full mt-2"></div>
               <div>
-                <p className="text-gray-900 font-medium">"Disrupt" used 47,000 times today</p>
+                <p className="text-gray-900 font-medium">&quot;Disrupt&quot; used 47,000 times today</p>
                 <p className="text-gray-500">8,293 readers • 8h ago</p>
               </div>
             </div>
             <div className="flex items-start space-x-2">
               <div className="w-2 h-2 bg-gray-400 rounded-full mt-2"></div>
               <div>
-                <p className="text-gray-900 font-medium">Another "game-changing" SaaS launch</p>
+                <p className="text-gray-900 font-medium">Another &quot;game-changing&quot; SaaS launch</p>
                 <p className="text-gray-500">5,729 readers • 12h ago</p>
               </div>
             </div>

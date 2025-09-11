@@ -1,5 +1,5 @@
 // Generate consistent real photo URLs based on name using RandomUser.me
-export function generateProfileAvatar(name: string, size: number = 40): string {
+export function generateProfileAvatar(name: string, _size: number = 40): string {
   // Use the person's name as seed for consistent photos
   const seed = name.toLowerCase().replace(/\s+/g, '');
   
