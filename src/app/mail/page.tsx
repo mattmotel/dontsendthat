@@ -4,13 +4,13 @@ import { useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { Users, Mail } from 'lucide-react';
 import Image from 'next/image';
-import LinkedInInterface from './components/LinkedInInterface';
-import GmailInterface from './components/GmailInterface';
+import LinkedInInterface from '../components/LinkedInInterface';
+import GmailInterface from '../components/GmailInterface';
 
-export default function Home() {
+export default function MailPage() {
   const router = useRouter();
   const pathname = usePathname();
-  const [activeTab, setActiveTab] = useState<'linkedin' | 'gmail'>('linkedin');
+  const [activeTab, setActiveTab] = useState<'linkedin' | 'gmail'>('gmail');
 
   // Sync tab state with URL
   useEffect(() => {
