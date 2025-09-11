@@ -56,9 +56,11 @@ The response should feel like the recipient:
 Make it professional but genuinely apologetic and validating. This is their fantasy response - the one that acknowledges they were right all along.
 
 Return a JSON object with:
-- from: sender name (extract from the "to" field or make it professional)
+- from: the recipient's name (the person who received the original email - use the "to" field value as the sender name)
 - subject: response subject line (Re: original subject)
-- content: the email response (2-4 paragraphs, professional, apologetic, and satisfying)`
+- content: the email response (2-4 paragraphs, professional, apologetic, and satisfying)
+
+IMPORTANT: The "from" field should be the person who received the original email (the "to" field value). If the "to" field is just a name like "Alex", use that name directly.`
         },
         {
           role: 'user',
@@ -87,13 +89,21 @@ Body: ${email.body}`
 }
 
 function generateFallbackResponse(email: { to: string; subject: string; body: string }) {
-  const senderName = email.to.split('@')[0].replace(/[._]/g, ' ')
-    .split(' ')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
+  // If it's just a name (no @ symbol), use it directly
+  let recipientName;
+  if (email.to.includes('@')) {
+    // It's an email address, extract the name part
+    recipientName = email.to.split('@')[0].replace(/[._]/g, ' ')
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  } else {
+    // It's just a name, use it directly
+    recipientName = email.to;
+  }
 
   return {
-    from: senderName,
+    from: recipientName,
     subject: `Re: ${email.subject}`,
     content: `Hi there,
 
@@ -106,7 +116,7 @@ I'm implementing immediate changes to ensure this doesn't happen again. You dese
 Thank you for your patience and for holding me accountable. Your professionalism in this situation is exactly what I should have shown from the beginning.
 
 Respectfully,
-${senderName}`
+${recipientName}`
   };
 }
 
