@@ -44,13 +44,8 @@ export default function LinkedInInterface() {
       
       // Check if we have valid comments data
       if (data.comments && Array.isArray(data.comments)) {
-        // Animate comments coming in one by one
-        const newComments = data.comments;
-        for (let i = 0; i < newComments.length; i++) {
-          setTimeout(() => {
-            setComments(prev => [...prev, newComments[i]]);
-          }, i * 1000); // 1 second delay between each comment
-        }
+        // Add all comments at once with staggered animation delays
+        setComments(data.comments);
       } else {
         console.error('Invalid response format:', data);
         // Show error state or fallback
@@ -223,7 +218,7 @@ export default function LinkedInInterface() {
               </div>
             )}
             
-            {!isPosting && (
+            {!isPosting && (comments.length > 0 || isGenerating) && (
               <>
                 {/* Engagement Stats */}
                 <div className="mt-4 pt-3 border-t border-gray-100">
@@ -235,7 +230,7 @@ export default function LinkedInInterface() {
                       </span>
                       <span>{comments.length} comments</span>
                     </div>
-                    {isGenerating && (
+                    {isGenerating && comments.length === 0 && (
                       <div className="flex items-center space-x-2">
                         <div className="animate-spin w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full"></div>
                         <span>Generating responses...</span>
@@ -285,8 +280,11 @@ export default function LinkedInInterface() {
               {comments.map((comment, index) => (
                 <div
                   key={comment.id}
-                  className="animate-fade-in"
-                  style={{ animationDelay: `${index * 100}ms` }}
+                  className="opacity-0 animate-fade-in"
+                  style={{ 
+                    animationDelay: `${index * 200}ms`,
+                    animationFillMode: 'forwards'
+                  }}
                 >
                   <div className="flex items-start space-x-3">
                     <Image 
