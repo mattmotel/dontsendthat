@@ -2,9 +2,6 @@
 
 import { useState } from 'react';
 import { 
-  Camera, 
-  Video, 
-  BarChart3, 
   ThumbsUp, 
   MessageCircle, 
   Share2, 
@@ -38,17 +35,28 @@ export default function LinkedInInterface() {
         body: JSON.stringify({ post: postContent }),
       });
       
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       const data = await response.json();
       
-      // Animate comments coming in one by one
-      const newComments = data.comments;
-      for (let i = 0; i < newComments.length; i++) {
-        setTimeout(() => {
-          setComments(prev => [...prev, newComments[i]]);
-        }, i * 1000); // 1 second delay between each comment
+      // Check if we have valid comments data
+      if (data.comments && Array.isArray(data.comments)) {
+        // Animate comments coming in one by one
+        const newComments = data.comments;
+        for (let i = 0; i < newComments.length; i++) {
+          setTimeout(() => {
+            setComments(prev => [...prev, newComments[i]]);
+          }, i * 1000); // 1 second delay between each comment
+        }
+      } else {
+        console.error('Invalid response format:', data);
+        // Show error state or fallback
       }
     } catch (error) {
       console.error('Error generating comments:', error);
+      // You could add a fallback here or show an error message
     } finally {
       setIsGenerating(false);
     }
@@ -73,12 +81,69 @@ export default function LinkedInInterface() {
   };
 
   return (
-    <div className="p-6 max-w-2xl mx-auto">
+    <div className="flex max-w-7xl mx-auto gap-6 p-6">
+      {/* Left Sidebar */}
+      <div className="w-72 hidden xl:block space-y-4">
+        {/* Profile Card */}
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+          <div className="h-16" style={{ background: 'linear-gradient(to right, #0467a8, #034f8a)' }}></div>
+          <div className="px-4 pb-4">
+            <div className="flex flex-col items-center -mt-8">
+              <div className="w-16 h-16 rounded-full flex items-center justify-center shadow-sm border-4 border-white" style={{ background: 'linear-gradient(to right, #0467a8, #045a96)' }}>
+                <span className="text-white font-bold text-lg">YU</span>
+              </div>
+              <h3 className="mt-2 font-semibold text-gray-900">You (Frustrated Professional)</h3>
+              <p className="text-sm text-gray-600 text-center">Venting Expert | Cathartic Content Creator</p>
+              <div className="w-full mt-3 pt-3 border-t border-gray-100">
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-600">Profile viewers</span>
+                  <span className="font-semibold" style={{ color: '#0467a8' }}>42</span>
+                </div>
+                <div className="flex justify-between text-sm mt-1">
+                  <span className="text-gray-600">Post impressions</span>
+                  <span className="font-semibold" style={{ color: '#0467a8' }}>1,337</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Recent Activity */}
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+          <h3 className="font-semibold text-gray-900 mb-3">Recent Activity</h3>
+          <div className="space-y-3 text-sm">
+            <div className="flex items-start space-x-2">
+              <div className="w-2 h-2 bg-blue-600 rounded-full mt-2"></div>
+              <div>
+                <p className="text-gray-900">You vented about micromanagement</p>
+                <p className="text-gray-500">Got 47 validating responses</p>
+              </div>
+            </div>
+            <div className="flex items-start space-x-2">
+              <div className="w-2 h-2 bg-green-600 rounded-full mt-2"></div>
+              <div>
+                <p className="text-gray-900">Called out toxic culture</p>
+                <p className="text-gray-500">127 people agreed</p>
+              </div>
+            </div>
+            <div className="flex items-start space-x-2">
+              <div className="w-2 h-2 bg-purple-600 rounded-full mt-2"></div>
+              <div>
+                <p className="text-gray-900">Roasted thought leaders</p>
+                <p className="text-gray-500">Epic thread ensued</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="flex-1 max-w-2xl">
       {/* Create Post Card */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
         <div className="p-4">
           <div className="flex items-start space-x-3">
-            <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full flex items-center justify-center shadow-sm">
+            <div className="w-12 h-12 rounded-full flex items-center justify-center shadow-sm" style={{ background: 'linear-gradient(to right, #0467a8, #045a96)' }}>
               <span className="text-white font-semibold text-sm">YU</span>
             </div>
             <div className="flex-1">
@@ -93,20 +158,7 @@ export default function LinkedInInterface() {
           </div>
           
           <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
-            <div className="flex items-center space-x-6 text-gray-600">
-              <button className="flex items-center space-x-2 hover:bg-gray-50 px-3 py-2 rounded-lg transition-colors">
-                <Camera size={20} className="text-blue-600" />
-                <span className="text-sm font-medium">Photo</span>
-              </button>
-              <button className="flex items-center space-x-2 hover:bg-gray-50 px-3 py-2 rounded-lg transition-colors">
-                <Video size={20} className="text-green-600" />
-                <span className="text-sm font-medium">Video</span>
-              </button>
-              <button className="flex items-center space-x-2 hover:bg-gray-50 px-3 py-2 rounded-lg transition-colors">
-                <BarChart3 size={20} className="text-orange-500" />
-                <span className="text-sm font-medium">Poll</span>
-              </button>
-            </div>
+            <div className="flex-1"></div>
             
             <div className="flex space-x-2">
               <button
@@ -118,7 +170,10 @@ export default function LinkedInInterface() {
               <button
                 onClick={handlePost}
                 disabled={!post.trim() || isPosting || isGenerating}
-                className="px-6 py-2 bg-blue-600 text-white rounded-full font-semibold text-sm hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+                className="px-6 py-2 text-white rounded-full font-semibold text-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+                style={{ backgroundColor: '#0467a8' }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#045a96'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#0467a8'}
               >
                 {isPosting ? (
                   <>
@@ -142,7 +197,7 @@ export default function LinkedInInterface() {
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
           <div className="p-4">
             <div className="flex items-start space-x-3">
-              <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full flex items-center justify-center shadow-sm">
+              <div className="w-12 h-12 rounded-full flex items-center justify-center shadow-sm" style={{ background: 'linear-gradient(to right, #0467a8, #045a96)' }}>
                 <span className="text-white font-semibold text-sm">YU</span>
               </div>
               <div className="flex-1">
@@ -209,14 +264,14 @@ export default function LinkedInInterface() {
         </div>
       )}
 
-      {/* Comment Generation Loading State */}
+      {/* Comment Loading State */}
       {isGenerating && comments.length === 0 && (
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+        <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-4 mb-6">
           <div className="flex items-center space-x-3">
-            <div className="animate-spin w-5 h-5 border-2 border-blue-600 border-t-transparent rounded-full"></div>
-            <span className="text-blue-800 font-medium">Generating cathartic responses from your LinkedIn network...</span>
+            <div className="animate-spin w-5 h-5 border-2 border-t-transparent rounded-full" style={{ borderColor: '#0467a8', borderTopColor: 'transparent' }}></div>
+            <span className="text-gray-700 font-medium">Your professional network is responding...</span>
           </div>
-          <p className="text-blue-600 text-sm mt-2">Hang tight, your validation is coming! 🎯</p>
+          <p className="text-gray-600 text-sm mt-2">People are engaging with your post.</p>
         </div>
       )}
 
@@ -263,6 +318,110 @@ export default function LinkedInInterface() {
           </div>
         </div>
       )}
+      </div>
+
+      {/* Right Sidebar */}
+      <div className="w-80 hidden xl:block space-y-4">
+        {/* News */}
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+          <h3 className="font-semibold text-gray-900 mb-3">News</h3>
+          <div className="space-y-3 text-sm">
+            <div className="flex items-start space-x-2">
+              <div className="w-2 h-2 bg-gray-400 rounded-full mt-2"></div>
+              <div>
+                <p className="text-gray-900 font-medium">Toxic positivity at all-time high</p>
+                <p className="text-gray-500">2,847 readers • 4h ago</p>
+              </div>
+            </div>
+            <div className="flex items-start space-x-2">
+              <div className="w-2 h-2 bg-gray-400 rounded-full mt-2"></div>
+              <div>
+                <p className="text-gray-900 font-medium">CEO posts another humble brag</p>
+                <p className="text-gray-500">12,394 readers • 6h ago</p>
+              </div>
+            </div>
+            <div className="flex items-start space-x-2">
+              <div className="w-2 h-2 bg-gray-400 rounded-full mt-2"></div>
+              <div>
+                <p className="text-gray-900 font-medium">"Disrupt" used 47,000 times today</p>
+                <p className="text-gray-500">8,293 readers • 8h ago</p>
+              </div>
+            </div>
+            <div className="flex items-start space-x-2">
+              <div className="w-2 h-2 bg-gray-400 rounded-full mt-2"></div>
+              <div>
+                <p className="text-gray-900 font-medium">Another "game-changing" SaaS launch</p>
+                <p className="text-gray-500">5,729 readers • 12h ago</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Trending Hashtags */}
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+          <h3 className="font-semibold text-gray-900 mb-3">Trending in Venting</h3>
+          <div className="space-y-2 text-sm">
+            <div className="flex items-center justify-between">
+              <span className="text-blue-600 font-medium">#MicromanagementSucks</span>
+              <span className="text-gray-500">2.1k posts</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-blue-600 font-medium">#ToxicWorkplace</span>
+              <span className="text-gray-500">1.8k posts</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-blue-600 font-medium">#ThoughtLeaderBS</span>
+              <span className="text-gray-500">1.5k posts</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-blue-600 font-medium">#CorporateCringe</span>
+              <span className="text-gray-500">1.2k posts</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-blue-600 font-medium">#HustleCultureToxic</span>
+              <span className="text-gray-500">987 posts</span>
+            </div>
+          </div>
+        </div>
+
+        {/* People You May Want to Vent About */}
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+          <h3 className="font-semibold text-gray-900 mb-3">People you may want to vent about</h3>
+          <div className="space-y-3">
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-gradient-to-r from-red-500 to-orange-500 rounded-full flex items-center justify-center">
+                <span className="text-white font-semibold text-sm">MB</span>
+              </div>
+              <div className="flex-1">
+                <p className="font-medium text-gray-900">Micromanaging Boss</p>
+                <p className="text-sm text-gray-500">CEO at Anxiety Corp</p>
+              </div>
+              <button className="text-blue-600 text-sm font-medium">Vent</button>
+            </div>
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+                <span className="text-white font-semibold text-sm">TC</span>
+              </div>
+              <div className="flex-1">
+                <p className="font-medium text-gray-900">Toxic Coworker</p>
+                <p className="text-sm text-gray-500">Drama Specialist</p>
+              </div>
+              <button className="text-blue-600 text-sm font-medium">Vent</button>
+            </div>
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full flex items-center justify-center">
+                <span className="text-white font-semibold text-sm">TL</span>
+              </div>
+              <div className="flex-1">
+                <p className="font-medium text-gray-900">Thought Leader</p>
+                <p className="text-sm text-gray-500">Professional Buzzword Generator</p>
+              </div>
+              <button className="text-blue-600 text-sm font-medium">Vent</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
   );
 }

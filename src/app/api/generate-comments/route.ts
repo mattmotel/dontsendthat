@@ -136,8 +136,17 @@ export async function POST(request: NextRequest) {
     
     try {
       commentTexts = await generateWithOpenAI(post);
+      // Ensure we got an array
+      if (!Array.isArray(commentTexts)) {
+        throw new Error('OpenAI returned invalid format');
+      }
     } catch (error) {
       console.log('OpenAI generation failed, using fallbacks:', error);
+      commentTexts = await generateFallbackComments();
+    }
+
+    // Ensure commentTexts is an array before proceeding
+    if (!Array.isArray(commentTexts)) {
       commentTexts = await generateFallbackComments();
     }
 
