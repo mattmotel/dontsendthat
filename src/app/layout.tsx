@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Don't Send That",
+  title: "Don't Send It",
   description: "Cathartic fake LinkedIn posts and Gmail responses",
 };
 
