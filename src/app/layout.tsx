@@ -24,6 +24,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+           {/* Plausible Analytics */}
+        <script defer data-domain="twsp.app" src="https://plausible.io/js/script.outbound-links.js"></script>
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
